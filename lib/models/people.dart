@@ -6,16 +6,12 @@ class People {
   People({this.code, this.data, this.message});
 
   People.fromJson(Map<dynamic, dynamic> json) {
-    print('json from'+json.toString());
     code = json['code'];
     if (json['data'] != null) {
-      // print('json from'+json['data'].toString());
       data = new List<Data>();
       json['data'].forEach((v) {
-       // print('json data is present: '+v.toString());
         data.add(new Data.fromJson(v));
       });
-     print('list of data'+data.toString());
     }
     message = json['message'];
   }
@@ -62,7 +58,6 @@ class Data {
       this.userId});
 
   Data.fromJson(Map<dynamic, dynamic> json) {
-    print('duties data: '+json.toString());
     duties = json['duties'];
     emailAddress = json['emailAddress'];
     employeeAge = json['employeeAge'];

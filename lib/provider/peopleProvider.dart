@@ -2,7 +2,7 @@ import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:greenapp/bloc/peopleBloc.dart';
 
-class PeopleProvider extends BlocProvider<PeopleBloc>{
+class PeopleProvider extends BlocProvider<PeopleBloc> {
   PeopleProvider({
     Widget child,
   }) : super(

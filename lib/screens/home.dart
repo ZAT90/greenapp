@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:greenapp/bloc/peopleBloc.dart';
 import 'package:greenapp/models/people.dart';
 import 'package:greenapp/provider/peopleProvider.dart';
+import 'package:greenapp/screens/details.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -43,25 +44,36 @@ class _HomePageState extends State<HomePage> {
         title: Text('home'),
       ),
       body: StreamBuilder<People>(
-        stream: peoples.fetchAllPeople(),
-        builder: (context, snapshot) {
-          print(snapshot.data.toString());
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'You have pushed the button this many times:',
-                ),
-                Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ],
-            ),
-          );
-        }
-      ),
+          stream: peoples.fetchAllPeople(),
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Center(child: CircularProgressIndicator());
+            }
+            List<Data> peopleList = snapshot.data.data;
+            return Center(
+                child: ListView.builder(
+                    itemCount: peopleList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PeopleDetail(detailData: peopleList[index], allPeopleData: peopleList,),
+                            )),
+                        leading: CircleAvatar(
+                          radius: 20,
+                          backgroundImage: NetworkImage(
+                            peopleList[index].profileImage,
+                          ),
+                        ),
+                        title: Text(
+                            '${peopleList[index].firstName} ${peopleList[index].lastName}'),
+                        subtitle: Text('${peopleList[index].employeeAge}'),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                      );
+                    }));
+          }),
     );
   }
 }

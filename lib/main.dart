@@ -1,5 +1,6 @@
 import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:greenapp/screens/details.dart';
 import './screens/home.dart';
 import './provider/peopleProvider.dart';
 
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> {
         ),
         routes: {
           '/': (context) => HomePage(),
+          '/detail': (context) => PeopleDetail(),
           // '/home': (context) => HomePage(),
           // '/featured': (context) => FeaturedCities(),
           // '/settings': (context) => Settings(),
