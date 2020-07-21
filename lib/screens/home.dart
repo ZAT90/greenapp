@@ -3,6 +3,7 @@ import 'package:greenapp/bloc/peopleBloc.dart';
 import 'package:greenapp/models/people.dart';
 import 'package:greenapp/provider/peopleProvider.dart';
 import 'package:greenapp/screens/details.dart';
+import 'package:expandable/expandable.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -50,27 +51,35 @@ class _HomePageState extends State<HomePage> {
               return Center(child: CircularProgressIndicator());
             }
             List<Data> peopleList = snapshot.data.data;
-            return Center(
+            return Container(
+                padding: EdgeInsets.all(10),
                 child: ListView.builder(
                     itemCount: peopleList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PeopleDetail(detailData: peopleList[index], allPeopleData: peopleList,),
-                            )),
-                        leading: CircleAvatar(
-                          radius: 20,
-                          backgroundImage: NetworkImage(
-                            peopleList[index].profileImage,
-                          ),
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)
                         ),
-                        title: Text(
-                            '${peopleList[index].firstName} ${peopleList[index].lastName}'),
-                        subtitle: Text('${peopleList[index].employeeAge}'),
-                        trailing: Icon(Icons.keyboard_arrow_right),
+                        child: ListTile(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PeopleDetail(
+                                  detailData: peopleList[index],
+                                  allPeopleData: peopleList,
+                                ),
+                              )),
+                          leading: CircleAvatar(
+                            radius: 20,
+                            backgroundImage: NetworkImage(
+                              peopleList[index].profileImage,
+                            ),
+                          ),
+                          title: Text(
+                              '${peopleList[index].firstName} ${peopleList[index].lastName}'),
+                          subtitle: Text('${peopleList[index].employeeAge}'),
+                          trailing: Icon(Icons.keyboard_arrow_right),
+                        ),
                       );
                     }));
           }),

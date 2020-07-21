@@ -92,9 +92,32 @@ class _PeopleDetailState extends State<PeopleDetail> {
 
   Row peopleDetails(String heading, String detail) {
     print(detail.startsWith('['));
+    List<String> testSplit = [];
     if (detail.startsWith('[')) {
-      List<String> dutiesList = detail.split(",");
-      print('dutiesList' + dutiesList.toString());
+     // List<String> dutiesList = detail.split(",");
+      print(detail
+          .replaceAll(new RegExp(r',,'), ',')
+          .replaceAll(new RegExp(r'{,'), '{'));
+      String duties = detail
+          .replaceAll(new RegExp(r',,'), ',')
+          .replaceAll(new RegExp(r'{,'), '{');
+      testSplit = duties.substring(1, duties.length - 1).split(', {');
+      print('test split: ' + testSplit[1]);
+    //   var splitThree = '{${testSplit[1]}';
+    //   var parsedJson = json.decode(splitThree);
+    //  // final Map value = jsonDecode(splitThree);
+    //  print('splitThree: '+parsedJson.toString());
+     
+
+      // String dutiesencode = json.decode(json.encode(duties));
+      // print('encode duties'+dutiesencode);
+
+      // final string =
+      //     '{this is name,name : aName, hobby : [fishing, playing_guitar]}';
+      // final newString = duties.replaceAllMapped(RegExp(r'\b\w+\b'), (match) {
+      //   return '"${match.group(0)}"';
+      // });
+      // print(newString);
     }
 
     return Row(
@@ -104,10 +127,12 @@ class _PeopleDetailState extends State<PeopleDetail> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(
-          detail,
+          detail.startsWith('[')?testSplit[0]:detail,
           style: TextStyle(fontSize: 20),
         ),
       ],
     );
   }
 }
+
+
