@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:greenapp/bloc/peopleBloc.dart';
 import 'package:greenapp/models/people.dart';
 import 'package:greenapp/provider/peopleProvider.dart';
 import 'package:greenapp/screens/details.dart';
-import 'package:expandable/expandable.dart';
+import 'package:string_validator/string_validator.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -56,6 +55,7 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                     itemCount: peopleList.length,
                     itemBuilder: (BuildContext context, int index) {
+                      print('$index'+isURL(peopleList[index].profileImage).toString());
                       return Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)

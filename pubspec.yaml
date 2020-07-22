@@ -31,7 +31,8 @@ dependencies:
   dio: ^3.0.9
   bloc_provider: ^0.7.0
   rxdart: ^0.24.1
-  expandable: ^4.1.4
+  string_validator: ^0.1.4
+  cached_network_image: ^2.2.0+1
 
 dev_dependencies:
   flutter_test:

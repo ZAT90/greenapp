@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:greenapp/models/people.dart';
-import 'dart:convert';
 
 class PeopleDetail extends StatefulWidget {
   final Data detailData;
@@ -15,7 +14,7 @@ class PeopleDetail extends StatefulWidget {
 class _PeopleDetailState extends State<PeopleDetail> {
   @override
   Widget build(BuildContext context) {
-    print('all people list: ' + widget.allPeopleData.toString());
+    //print('all people list: ' + widget.allPeopleData.toString());
     List<Data> findLeader = [];
     if (!widget.detailData.isTeamLead) {
       findLeader = widget.allPeopleData
@@ -29,12 +28,8 @@ class _PeopleDetailState extends State<PeopleDetail> {
         findLeader = widget.allPeopleData
             .where((allppl) => allppl.jobTitleName == 'General Manager')
             .toList();
-      } else {
-        //findLeader =
-      }
+      } else {}
     }
-    print('isLeader: ' + widget.detailData.isTeamLead.toString());
-    //  print('findleader ' + findLeader[0].firstName);
     return Scaffold(
       appBar: AppBar(
         title: Text('details'),
@@ -91,33 +86,26 @@ class _PeopleDetailState extends State<PeopleDetail> {
   }
 
   Row peopleDetails(String heading, String detail) {
-    print(detail.startsWith('['));
-    List<String> testSplit = [];
+    List<String> splitBrokenJson = [];
+    String firstDuty = '';
+    String secondDuty = '';
+    String thirdDuty = '';
+    String fourthDuty = '';
     if (detail.startsWith('[')) {
-     // List<String> dutiesList = detail.split(",");
-      print(detail
-          .replaceAll(new RegExp(r',,'), ',')
-          .replaceAll(new RegExp(r'{,'), '{'));
       String duties = detail
           .replaceAll(new RegExp(r',,'), ',')
           .replaceAll(new RegExp(r'{,'), '{');
-      testSplit = duties.substring(1, duties.length - 1).split(', {');
-      print('test split: ' + testSplit[1]);
-    //   var splitThree = '{${testSplit[1]}';
-    //   var parsedJson = json.decode(splitThree);
-    //  // final Map value = jsonDecode(splitThree);
-    //  print('splitThree: '+parsedJson.toString());
-     
-
-      // String dutiesencode = json.decode(json.encode(duties));
-      // print('encode duties'+dutiesencode);
-
-      // final string =
-      //     '{this is name,name : aName, hobby : [fishing, playing_guitar]}';
-      // final newString = duties.replaceAllMapped(RegExp(r'\b\w+\b'), (match) {
-      //   return '"${match.group(0)}"';
-      // });
-      // print(newString);
+      splitBrokenJson = duties.substring(1, duties.length - 1).split(', {');
+      List<String> secondDutyDecode =
+          splitBrokenJson[1].toString().replaceAll('}', '').split(':');
+      List<String> thirdDutyDecode =
+          splitBrokenJson[2].toString().replaceAll('}', '').split(':');
+      List<String> thirdDutyDecodetwo =
+          thirdDutyDecode[1].replaceAll('[', '').replaceAll(']', '').split(',');
+      firstDuty = splitBrokenJson[0];
+      secondDuty = '${secondDutyDecode[0]}${secondDutyDecode[1]}';
+      thirdDuty = '${thirdDutyDecode[0]}${thirdDutyDecodetwo[0]}';
+      fourthDuty = thirdDutyDecodetwo[1];
     }
 
     return Row(
@@ -126,13 +114,32 @@ class _PeopleDetailState extends State<PeopleDetail> {
           '$heading: ',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Text(
-          detail.startsWith('[')?testSplit[0]:detail,
-          style: TextStyle(fontSize: 20),
-        ),
+        detail.startsWith('[')
+            ? Column(
+                children: <Widget>[
+                  Text(
+                    firstDuty,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    secondDuty,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    thirdDuty,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    fourthDuty,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              )
+            : Text(
+                detail,
+                style: TextStyle(fontSize: 20),
+              ),
       ],
     );
   }
 }
-
-
