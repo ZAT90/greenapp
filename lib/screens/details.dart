@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greenapp/models/people.dart';
+import 'package:greenapp/screens/home.dart';
 
 class PeopleDetail extends StatefulWidget {
   final Data detailData;
@@ -35,10 +36,26 @@ class _PeopleDetailState extends State<PeopleDetail> {
         title: Text('details'),
       ),
       body: Container(
-        padding: EdgeInsets.all(12),
+        color:Color(0xf5f2d0),
+        padding: EdgeInsets.all(20),
         alignment: Alignment.center,
         child: Column(
           children: <Widget>[
+            FutureBuilder<dynamic>(
+                future: checkImageRes(widget.detailData.profileImage),
+                builder: (context, snapshot) {
+                  return CircleAvatar(
+                    radius: 80,
+                    backgroundImage: NetworkImage(
+                      snapshot.data != null
+                          ? snapshot.data
+                          : 'https://i.stack.imgur.com/l60Hf.png',
+                    ),
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
             peopleDetails(
                 'Duties',
                 widget.detailData.duties.isEmpty
@@ -47,7 +64,7 @@ class _PeopleDetailState extends State<PeopleDetail> {
             SizedBox(
               height: 10,
             ),
-            peopleDetails('Email address', widget.detailData.emailAddress),
+            peopleDetails('Email ID', widget.detailData.emailAddress),
             SizedBox(
               height: 10,
             ),
@@ -115,25 +132,28 @@ class _PeopleDetailState extends State<PeopleDetail> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         detail.startsWith('[')
-            ? Column(
-                children: <Widget>[
-                  Text(
-                    firstDuty,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    secondDuty,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    thirdDuty,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    fourthDuty,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
+            ? Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      firstDuty,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      secondDuty,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      thirdDuty,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      fourthDuty,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
+                ),
               )
             : Text(
                 detail,

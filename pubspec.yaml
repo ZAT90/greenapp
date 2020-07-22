@@ -33,6 +33,9 @@ dependencies:
   rxdart: ^0.24.1
   string_validator: ^0.1.4
   cached_network_image: ^2.2.0+1
+  http: ^0.12.2
+  splashscreen: ^1.2.0
+  connectivity: ^0.4.4+1
 
 dev_dependencies:
   flutter_test:

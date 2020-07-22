@@ -16,4 +16,3 @@ class PeopleBloc implements Bloc {
   }
 }
 
-//final peoplebloc = PeopleBloc();

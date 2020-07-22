@@ -1,6 +1,7 @@
 import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:greenapp/screens/details.dart';
+import 'package:greenapp/screens/splash.dart';
 import './screens/home.dart';
 import './provider/peopleProvider.dart';
 
@@ -18,9 +19,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProviderTree(
-      blocProviders: [
-        PeopleProvider()
-      ],
+      blocProviders: [PeopleProvider()],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -28,14 +27,11 @@ class _MyAppState extends State<MyApp> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         routes: {
-          '/': (context) => HomePage(),
+          '/': (context) => SplashPage(),
+          '/home': (context) => HomePage(),
           '/detail': (context) => PeopleDetail(),
-          // '/home': (context) => HomePage(),
-          // '/featured': (context) => FeaturedCities(),
-          // '/settings': (context) => Settings(),
         },
       ),
     );
   }
 }
-
